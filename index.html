@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phaser.js Game</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #ffc836;
+    }
+  </style>
+</head>
+<body>
+  <div id="phaser-game"></div>
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js"></script>
+  <script>
+    let gameState = {
+      palette: [0xa7f66c, 0x844cc5, 0x66e2e2, 0x4c7df3, 0xffc836, 0xec32fc],
+      selectedColor: 0x844cc5,
+    };
+
+    function create () {
+      let pegasusShapes = getPegasusShapes(this);
+      let staticShapes  = getPegasusStaticShapes(this); 
+      for (shape of pegasusShapes) {
+        shape.smoothness = 25;
+        shape.strokeColor = 0x000000;
+        shape.isStroked = true;
+        shape.setOrigin(0, 1);
+        shape.lineWidth = 2;
+        shape.setInteractive();
+        shape.on('pointerdown', function() { this.fillColor = gameState.selectedColor });
+        shape.on('pointerover', function() { this.strokeColor = 0xffffff; this.setBlendMode(Phaser.BlendModes.SCREEN)});
+        shape.on('pointerout', function() { this.strokeColor = 0x000000; this.setBlendMode(Phaser.BlendModes.NORMAL)});
+      }
+
+      let paletteBox = this.add.rectangle(0, 475, 440, 75, 0x37c3be);
+      paletteBox.setOrigin(0, 0);
+      gameState.paletteCircles = [];
+      const spacing = 440 / gameState.palette.length;
+      const translation = spacing / 2;
+
+      for (let i = 0; i < gameState.palette.length; i++) {
+        let color = gameState.palette[i];
+        let paletteCircle = this.add.circle(translation + spacing * i, 515, 22, color);
+
+        paletteCircle.strokeColor = 0x000000;
+        paletteCircle.isStroked = true;
+        paletteCircle.lineWid
