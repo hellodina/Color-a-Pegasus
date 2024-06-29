@@ -14,6 +14,10 @@
       height: 100vh;
       background-color: #ffc836;
     }
+    #phaser-game {
+      width: 440px;
+      height: 550px;
+    }
   </style>
 </head>
 <body>
@@ -25,9 +29,9 @@
       selectedColor: 0x844cc5,
     };
 
-    function create () {
+    function create() {
       let pegasusShapes = getPegasusShapes(this);
-      let staticShapes  = getPegasusStaticShapes(this); 
+      let staticShapes = getPegasusStaticShapes(this); 
       for (shape of pegasusShapes) {
         shape.smoothness = 25;
         shape.strokeColor = 0x000000;
@@ -52,4 +56,106 @@
 
         paletteCircle.strokeColor = 0x000000;
         paletteCircle.isStroked = true;
-        paletteCircle.lineWid
+        paletteCircle.lineWidth = 2;
+        paletteCircle.setInteractive();
+
+        paletteCircle.on('pointerdown', function() {
+          gameState.selectedColor = this.color; 
+        }, { color });
+
+        paletteCircle.on('pointerover', function() {
+          this.strokeColor = 0xffffff; 
+        });
+
+        paletteCircle.on('pointerout', function() { 
+          this.paletteCircle.strokeColor = 0x000000;
+          if (gameState.selectedColor === this.color) {
+            for (let circle of gameState.paletteCircles) {
+              circle.strokeColor = 0x000000;
+            }
+            this.paletteCircle.strokeColor = 0xffc836; 
+          }
+        }, { paletteCircle, color });
+
+        gameState.paletteCircles.push(paletteCircle);
+      }
+    }
+
+    function getPegasusShapes(scene) {
+      return [body(scene), hindLeg(scene), rearLeg(scene), rearHoofRight(scene), rearHoofLeft(scene), frontHoofRight(scene), frontHoofLeft(scene), underWing(scene), wing(scene), tail(scene), hair(scene), mane(scene)];
+    }
+
+    function getPegasusStaticShapes(scene) {
+      eye(scene);
+      nostril(scene);
+    }
+
+    function body(scene) {
+      let path = scene.add.path();
+      path.moveTo(12.7257659,202.472652);
+      path.add(new Phaser.Curves.CubicBezier(new Phaser.Math.Vector2(12.7257659,202.472652), new Phaser.Math.Vector2(19.8214691,192.476558), new Phaser.Math.Vector2(31.4699066,182.212886), new Phaser.Math.Vector2(61.1847503,174.816402)));
+      path.add(new Phaser.Curves.CubicBezier(new Phaser.Math.Vector2(61.1847503,174.816402), new Phaser.Math.Vector2(90.8995941,167.419917), new Phaser.Math.Vector2(110.469907,140.679683), new Phaser.Math.Vector2(114.938657,134.294917)));
+      path.add(new Phaser.Curves.CubicBezier(new Phaser.Math.Vector2(114.938657,134.294917), new Phaser.Math.Vector2(119.407407,127.910152), new Phaser.Math.Vector2(122.036313,114.800777), new Phaser.Math.Vector2(125.460141,94.8261673)));
+      path.add(new Phaser.Curves.CubicBezier(new Phaser.Math.Vector2(125.460141,94.8261673), new Phaser.Math.Vector2(128.883969,74.851558), new Phaser.Math.Vector2(139.014828,47.023433), new Phaser.Math.Vector2(158.712094,33.4902298)));
+      path.add(new Phaser.Curves.CubicBezier(new Phaser.Math.Vector2(158.712094,33.4902298), new Phaser.Math.Vector2(171.843604,24.4680944), new Phaser.Math.Vector2(181.286964,19.6380163), new Phaser.Math.Vector2(187.042172,18.9999955)));
+      path.add(new Phaser.Curves.CubicBezier(new Phaser.Math.Vector2(187.042172,18.9999955), new Phaser.Math.Vector2(189.783058,14.6132767), new Phaser.Math.Vector2(192.643084,11.3072871), new Phaser.Math.Vector2(195.62225,9.08202672)));
+      path.add(new Phaser.Curves.CubicBezier(new Phaser.Math.Vector2(195.62225,9.08202672), new Phaser.Math.Vector2(200.091,5.74413609), new Phaser.Math.Vector2(206.137387,1.71190953), new Phaser.Math.Vector2(207.157895,0.441401719)));
+      path.add(new Phaser.Curves.CubicBezier(new Phaser.Math.Vector2(207.157895,0.441401719), new Phaser.Math.Vector2(208.178403,-0.829106093), new Phaser.Math.Vector2(209.589535,0.914057969), new Phaser.Math.Vector2(208.883969,2.25292516)));
+      path.add(new Phaser.Curves.CubicBezier(new Phaser.Math.Vector2(208.883969,2.25292516), new Phaser.Math.Vector2(208.178403,3.59179234), new Phaser.Math.Vector2(205.635922,7.96142125), new Phaser.Math.Vector2(204.840512,9.08202672)));
+      path.add(new Phaser.Curves.CubicBezier(new Phaser.Math.Vector2(204.840512,9.08202672), new Phaser.Math.Vector2(204.045102,10.2026322), new Phaser.Math.Vector2(205.635922,13.9345703), new Phaser.Math.Vector2(196.707211,21.2607377)));
+      path.add(new Phaser.Curves.CubicBezier(new Phaser.Math.Vector2(196.707211,21.2607377), new Phaser.Math.Vector2(200.845703,17.6943359), new Phaser.Math.Vector2(206.486996,13.0219681), new Phaser.Math.Vector2(210.28436,9.75194859)));
+      path.add(new Phaser.Curves.CubicBezier(new Phaser.Math.Vector2(210.28436,9.75194859), new Phaser.Math.Vector2(214.081723,6.48192906), new Phaser.Math.Vector2(215.719418,3.31249547), new Phaser.Math.Vector2(217.888852,3.31249547)));
+      path.add(new Phaser.Curves.CubicBezier(new Phaser.Math.Vector2(217.888852,3.31249547), new Phaser.Math.Vector2(220.058285,3.31249547), new Phaser.Math.Vector2(217.953305,11.6557572), new Phaser.Math.Vector2(216.855649,12.6601517)));
+      path.add(new Phaser.Curves.CubicBezier(new Phaser.Math.Vector2(216.855649,12.6601517), new Phaser.Math.Vector2(215.757992,13.6645463), new Phaser.Math.Vector2(214.496274,18.844722), new Phaser.Math.Vector2(213.672055,20.0527298)));
+      path.add(new Phaser.Curves.CubicBezier(new Phaser.Math.Vector2(213.672055,20.0527298), new Phaser.Math.Vector2(212.847836,21.2607377), new Phaser.Math.Vector2(211.503082,30.5041722), new Phaser.Math.Vector2(209.934748,32.8875668)));
+      path.add(new Phaser.Curves.CubicBezier(new Phaser.Math.Vector2(209.934748,32.8875668), new Phaser.Math.Vector2(208.366414,35.2709614), new Phaser.Math.Vector2(207.408971,38.8887954), new Phaser.Math.Vector2(205.838859,40.2823326)));
+      path.add(new Phaser.Curves.CubicBezier(new Phaser.Math.Vector2(205.838859,40.2823326), new Phaser.Math.Vector2(204.268747,41.6758698), new Phaser.Math.Vector2(202.100982,49.388429), new Phaser.Math.Vector2(199.54932,53.0344074)));
+      path.add(new Phaser.Curves.CubicBezier(new Phaser.Math.Vector2(199.54932,53.0344074), new Phaser.Math.Vector2(196.997659,56.6803858), new Phaser.Math.Vector2(192.036313,60.9820377), new Phaser.Math.Vector2(191.036313,63.589158)));
+      path.add(new Phaser.Curves.CubicBezier(new Phaser.Math.Vector2(191.036313,63.589158), new Phaser.Math.Vector2(190.036313,66.1962784), new Phaser.Math.Vector2(182.203239,65.4665178), new Phaser.Math.Vector2(178.932594,65.4665178)));
+      path.add(new Phaser.Curves.CubicBezier(new Phaser.Math.Vector2(178.932594,65.4665178), new Phaser.Math.Vector2(175.661949,65.4665178), new Phaser.Math.Vector2(166.019862,68.697303), new Phaser.Math.Vector2(162.565544,73.8056746)));
+      path.add(new Phaser.Curves.CubicBezier(new Phaser.Math.Vector2(162.565544,73.8056746), new Phaser.Math.Vector2(159.111226,78.9140462), new Phaser.Math.Vector2(151.286964,85.589158), new Phaser.Math.Vector2(146.260141,90.4082804)));
+      path.add(new Phaser.Curves.CubicBezier(new Phaser.Math.Vector2(146.260141,90.4082804), new Phaser.Math.Vector2(141.233318,95.2274029), new Phaser.Math.Vector2(135.712094,102.53166), new Phaser.Math.Vector2(134.712094,109.105991)));
+      path.add(new Phaser.Curves.CubicBezier(new Phaser.Math.Vector2(134.712094,109.105991), new Phaser.Math.Vector2(133.712094,115.680322), new Phaser.Math.Vector2(123.711048,133.612092), new Phaser.Math.Vector2(119.825142,137.105991)));
+      path.add(new Phaser.Curves.CubicBezier(new Phaser.Math.Vector2(119.825142,137.105991), new Phaser.Math.Vector2(115.939236,140.59989), new Phaser.Math.Vector2(110.722358,144.336901), new Phaser.Math.Vector2(106.472358,152.826167)));
+      path.add(new Phaser.Curves.CubicBezier(new Phaser.Math.Vector2(106.472358,152.826167), new Phaser.Math.Vector2(102.222358,161.315432), new Phaser.Math.Vector2(93.4965077,169.388662), new Phaser.Math.Vector2(87.9579766,175.215852)));
+      path.add(new Phaser.Curves.CubicBezier(new Phaser.Math.Vector2(87.9579766,175.215852), new Phaser.Math.Vector2(82.4194456,181.043042), new Phaser.Math.Vector2(80.9970664,180.303815), new Phaser.Math.Vector2(70.5668796,190.0124)));
+      path.add(new Phaser.Curves.CubicBezier(new Phaser.Math.Vector2(70.5668796,190.0124), new Phaser.Math.Vector2(60.1366929,199.720986), new Phaser.Math.Vector2(38.3407643,203.334776), new Phaser.Math.Vector2(24.1342828,202.994603)));
+      path.add(new Phaser.Curves.CubicBezier(new Phaser.Math.Vector2(24.1342828,202.994603), new Phaser.Math.Vector2(9.92780126,202.65443), new Phaser.Math.Vector2(9.92780126,202.65443), new Phaser.Math.Vector2(9.92780126,202.65443)));
+
+      let bodyShape = scene.add.graphics();
+      bodyShape.fillStyle(0xffffff, 1);
+      path.draw(bodyShape);
+
+      return bodyShape;
+    }
+
+    function hindLeg(scene) {
+      let path = scene.add.path();
+      path.moveTo(0, 0);
+      // Your SVG Path for hindLeg
+      // Add more curves and lines to form the shape
+
+      let shape = scene.add.graphics();
+      shape.fillStyle(0xffffff, 1);
+      path.draw(shape);
+
+      return shape;
+    }
+
+    // Define the rest of the shape functions similarly
+
+    const config = {
+      type: Phaser.AUTO,
+      parent: 'phaser-game',
+      backgroundColor: 0xffc836,
+      width: 440,
+      height: 550,
+      scene: {
+        create,
+      }
+    };
+
+    const game = new Phaser.Game(config);
+  </script>
+</body>
+</html>
