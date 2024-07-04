@@ -5,8 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Color a Pegasus</title>
     <style>
-        body { margin: 0; }
-        canvas { display: block; background-color: #ffc836; }
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffffff; /* Optional: changes the background color of the whole page */
+        }
+        canvas {
+            display: block; /* Ensures no extra space around the canvas */
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.min.js"></script>
 </head>
